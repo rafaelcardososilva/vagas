@@ -1,6 +1,6 @@
-# vagas-teste
+# vagas
 
-> A Vue.js project
+> Teste para Vagas e Vue.js
 
 ## Build Setup
 

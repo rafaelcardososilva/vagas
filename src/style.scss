@@ -1,0 +1,24 @@
+$corP: #a8395c;
+
+* {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+header{
+  background: $corP;
+
+  *{
+  	color: white;
+  	font-weight: normal;
+  }
+}
+
+h1{
+  color: $corP;
+  font-size: 36px;
+  font-weight: normal;
+}

@@ -4,16 +4,16 @@
 			<img :src="video.snippet.thumbnails.medium.url" width="170" height="96">
 		</div>
 		<div class="content">
-			<!-- duration {{ video.contentDetails.duration }} <br> -->
+			duration {{ video.contentDetails.duration }} <br>
 			{{ video.snippet.title }} <br>
-			<!-- <span class="glyphicon glyphicon-eye-open"></span>{{ video.statistics.viewCount }} views -->
+			<span class="glyphicon glyphicon-eye-open"></span>{{ video.statistics.viewCount }} views
 		</div>
 	</div>
 </template>
 
 <script>
 export default{
-	props: ['video']
+	props: ["video"]
 }
 </script>
 

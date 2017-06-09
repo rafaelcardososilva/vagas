@@ -6,6 +6,7 @@ import VueResource from 'vue-resource';
 import { routes } from './routes';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 
 Vue.use(VueRouter);
 Vue.use(VueResource);

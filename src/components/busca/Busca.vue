@@ -1,7 +1,6 @@
 	<template>
 	<div class="container">
 		<h1>Todos os vídeos do Canal</h1>
-
 		<div class="row videos">
 			<div class="col-md-4 col-xs-2" v-for="video in videos">
 				<item-video :video="video"></item-video>
@@ -21,12 +20,30 @@ import VideoService from '../../services/VideoService.js'
 export default{
 
 	components:{
-		'item-video' : Video
+		"item-video" : Video
 	},
+	props:["filtro"],
 	data(){
-		return{
+		return{ 
 			videos: [],
 			nextPage: "",
+		}
+	},
+	watch:{
+		filtro: function(value){
+			var scope = this;
+
+			// faz a busca com filtro e delay para buscar com string maior
+			clearTimeout(this.delayTimer);
+			if( value != "" ){
+			    this.delayTimer = setTimeout(function() {
+			        
+					// lista videos com busca
+					scope.videoService
+						.lista(scope.filtro)
+						.then(videos => scope.videos = videos);
+			    }, 500); 
+			}
 		}
 	},
 	methods:{

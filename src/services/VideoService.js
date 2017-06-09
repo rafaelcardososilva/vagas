@@ -9,32 +9,39 @@ export default class VideoService{
 		this._maxVideos = 12;
 	}
 
-	lista(){
+	lista(filtro){
 
+		// confere se tem filtro
+		filtro = filtro != undefined ? "&q="+filtro : "";
 
-		// salva a proxima pagina
-		// this._nextPage = res.data.nextPageToken;
+		// "&pageToken="+this._nextPage+ paginacao
+
 
 		// get videos
-		let promise = this._http.get("https://www.googleapis.com/youtube/v3/search?key="+this._apiKey+"&channelId="+this._channelId+"&part=snippet&order=date&maxResults="+this._maxVideos+"&pageToken="+this._nextPage);
-		return promise.then(res => res.data.items);
+		var promise = this._http.get("https://www.googleapis.com/youtube/v3/search?key="+this._apiKey+"&channelId="+this._channelId+"&part=snippet&order=date&maxResults="+this._maxVideos+"&"+filtro);
 		
-	}
+		console.log("https://www.googleapis.com/youtube/v3/search?key="+this._apiKey+"&channelId="+this._channelId+"&part=snippet&order=date&maxResults="+this._maxVideos+"&"+filtro);
 
-	getVideosDetalhes(item){
-
-		var scope = this,
-			videos = [];
-
-		// percorre todos os videos para pegar os detalhes
-		
-		items.forEach(function(item, i){
-			let promise = scope._http.get("https://www.googleapis.com/youtube/v3/videos?id="+item.id.videoId+"&key="+scope._apiKey+"&part=snippet,contentDetails,statistics,status");
-			promise.then(res => {
-				videos.push(res.data.items[0]);
-			});
+		// salva a proxima pagina
+		promise.then(res =>{
+			this._nextPage = res.data.nextPageToken == undefined ? "" : res.data.nextPageToken
 		});
 
+		// retorna os videos
+		return promise.then(res => this.getVideoDetalhe(res.data.items))
 	}
 
+	getVideoDetalhe(items){
+
+		var scope = this;
+
+		// percorre todos os videos para pega o detalhe
+		var promise = items.map(function(item){
+
+			return scope._http.get("https://www.googleapis.com/youtube/v3/videos?id="+item.id.videoId+"&key="+scope._apiKey+"&part=snippet,contentDetails,statistics,status")
+			.then(res => res.data.items[0])
+		});
+
+		return Promise.all(promise);
+	}
 }

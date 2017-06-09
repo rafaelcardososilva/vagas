@@ -16,6 +16,7 @@
 <script>
 
 import Video from '../shared/video/Video.vue';
+import VideoService from '../../services/VideoService.js'
 
 export default{
 
@@ -25,35 +26,20 @@ export default{
 	data(){
 		return{
 			videos: [],
-			nextPage: ""
+			nextPage: "",
 		}
 	},
 	methods:{
 		loadVideos(){
-			var scope = this,
-				channelId = "UC_x5XG1OV2P6uZZ5FSM9Ttw",
-				apiKey = "AIzaSyAV_AkA0fP_RRaJU2YjzbGXGghQ6xdNBAE",
-				urlListVideos = "https://www.googleapis.com/youtube/v3/search?key="+apiKey+"&channelId="+channelId+"&part=snippet&order=date&maxResults=12";
-
-			// get videos
-			let promise = scope.$http.get(urlListVideos + "&pageToken=" + scope.nextPage);
-			promise.then(res => {
-
-				// save next page
-				scope.nextPage = res.data.nextPageToken;
-				
-				// get details video
-				res.data.items.forEach(function(item, i){
-					let promise = scope.$http.get("https://www.googleapis.com/youtube/v3/videos?id="+item.id.videoId+"&key="+apiKey+"&part=snippet,contentDetails,statistics,status");
-					promise.then(res => {
-						scope.videos.push(res.data.items[0]);
-					});
-				});
-			});
+			this.videoService
+				.lista()
+				.then(videos => this.videos = this.videos.concat(videos));
 		}
 	},
 	created(){
-		this.loadVideos();			
+
+		this.videoService = new VideoService(this.$http);
+		this.loadVideos();
 	}
 }
 </script>

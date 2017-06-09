@@ -8,11 +8,6 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
-  plugns: [
-    new webpack.pluginProvider {
-      '$': "jquery"
-    }
-  ],
   module: {
     rules: [
       {

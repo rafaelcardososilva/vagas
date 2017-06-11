@@ -10,7 +10,9 @@
 					<div>
 						<div>
 							<div class="col-md-10">
-								{{ video.snippet.title }} 
+								{{ video.snippet.title }} <br>
+								{{ video.statistics.viewCount }} views <br>
+								{{ video.snippet.publishedAt | formataData }}
 							</div>
 							<div class="col-md-2">
 							</div>
@@ -26,7 +28,7 @@
 						<div class="col-md-12" v-for="video in videos">
 							<item-video :video="video" @click.native="assistir(video)"></item-video>
 						</div>
-						<button @click="carregaVideos()"><span>Carregas mais vídeos...</span></button>
+						<carregar-mais @click.native="proximosVideos()" ref="bt"></carregar-mais>
 					</div>
 				</div>
 			</div>
@@ -36,31 +38,36 @@
 
 <script>
 
+import Botao from '../shared/botao/Botao.vue'
 import Video from '../shared/video/Video.vue';
 import VideoService from '../../services/VideoService.js'
 
 export default{
 
 	components:{
-		'item-video' : Video
+		'item-video' : Video, 
+		'carregar-mais' : Botao
 	},
 	data(){
 		return{
 			videos: [],
 			videoPlay: [],
-			nextPage: "",
+			nextPage: ""
 		}
 	},
 	methods:{
-		carregaVideos(){
+		proximosVideos(){
+
+			// inicia spinner
+			this.$refs.bt.iniciaSpinner(false, true);
+
 			this.videoService
-				.lista()
+				.listaMaisVideos()
 				.then(videos => {
-					// exibe mais videos
 					this.videos = this.videos.concat(videos)
 
-					// exibe video em destaque (considero o primeiro)
-					this.videoPlay = this.videoPlay.concat(videos[0])
+					// para spinner
+					this.$refs.bt.iniciaSpinner(true, false);
 				});
 		},
 		assistir(video){
@@ -69,9 +76,16 @@ export default{
 		}
 	},
 	created(){
-
+		// cria servico de videos api
 		this.videoService = new VideoService(this.$http);
-		this.carregaVideos();
+		this.videoService
+			.lista()
+			.then(videos => {
+				this.videos = this.videos.concat(videos)
+
+				// exibe video em destaque (considero o primeiro)
+				this.videoPlay = this.videoPlay.concat(videos[0])
+			});
 	}
 }
 

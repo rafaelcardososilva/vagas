@@ -6,7 +6,7 @@
 		<div class="content">
 			duration {{ video.contentDetails.duration }} <br>
 			{{ video.snippet.title }} <br>
-			<span class="glyphicon glyphicon-eye-open"></span>{{ video.statistics.viewCount }} views
+			<span class="glyphicon glyphicon-eye-open"></span>{{ video.statistics.viewCount | abreviaMilhar }} views
 		</div>
 	</div>
 </template>

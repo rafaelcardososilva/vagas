@@ -1,26 +1,33 @@
 	<template>
 	<div class="container">
 		<h1>Todos os vídeos do Canal</h1>
-		<div class="row videos">
-			<div class="col-md-4 col-xs-2" v-for="video in videos">
-				<item-video :video="video"></item-video>
+		<div v-if="videos.length > 0">
+			<div class="row videos">
+				<div class="col-md-4 col-xs-2" v-for="video in videos">
+					<item-video :video="video"></item-video>
+				</div>
 			</div>
 		</div>
+		<div v-else>
+		  <h3>Nenhum resultado encontrado para sua busca :(</h3>
+		</div>
 		<div class="row">
-			<button @click="loadVideos()"><span>Carregas mais vídeos...</span></button>
+			<carregar-mais @click.native="proximosVideos()" ref="bt"></carregar-mais>
 		</div>
 	</div>
 </template>
 
 <script>
 
+import Botao from '../shared/botao/Botao.vue'
 import Video from '../shared/video/Video.vue';
 import VideoService from '../../services/VideoService.js'
 
 export default{
 
 	components:{
-		"item-video" : Video
+		"item-video" : Video,
+		'carregar-mais' : Botao
 	},
 	props:["filtro"],
 	data(){
@@ -40,23 +47,33 @@ export default{
 			        
 					// lista videos com busca
 					scope.videoService
-						.lista(scope.filtro)
+						.listaComBusca(scope.filtro)
 						.then(videos => scope.videos = videos);
 			    }, 500); 
 			}
 		}
 	},
 	methods:{
-		loadVideos(){
+		proximosVideos(){
+			// inicia spinner
+			this.$refs.bt.iniciaSpinner(false, true);
+
 			this.videoService
-				.lista()
-				.then(videos => this.videos = this.videos.concat(videos));
+				.listaMaisVideos()
+				.then(videos => {
+					this.videos = this.videos.concat(videos)
+
+					// para spinner
+					this.$refs.bt.iniciaSpinner(true, false);
+				});
 		}
 	},
 	created(){
-
+		// cria servico de videos api
 		this.videoService = new VideoService(this.$http);
-		this.loadVideos();
+		this.videoService
+			.lista()
+			.then(videos => this.videos = this.videos.concat(videos));
 	}
 }
 </script>

@@ -1,11 +1,18 @@
-$corP: #a8395c;
-
 * {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 14px;  
+}
+
+ul,label,p,div,h1,h3{
+  padding: 0px;
+  margin: 0px;
+}
+
+h1,h2,h3{
+  margin: 30px 0px;
 }
 
 header{
@@ -16,8 +23,132 @@ header{
   }
 }
 
-h1{
+h1, h2, h3{
   color: $corP;
-  font-size: 36px;
+  font-size: $tamanhoTitulo;
+}
+
+h4{
+  color: $corP;
+  font-size: 16px;
   font-weight: normal;
+}
+
+.modal-backdrop{
+  background-color: #fff;
+}
+
+.link:hover, .link:hover *{
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.site{
+  padding-bottom: 30px;
+}
+
+header{
+  padding: 10px 0px;
+
+  *{
+    color: white;
+  }
+
+  a:hover, a:focus{
+    color: white;
+  }
+
+  .logo-container{
+    text-align: left;
+
+    .icone{
+      font-size: 30px;
+    }
+
+    .nome{
+      bottom: 5px;
+      font-size: 16px;
+      position: relative;
+    }
+  }
+
+  .menu-container{
+    text-align: right;
+    line-height: 35px;
+
+    li{
+      list-style: none;
+      display: inline-block;
+    }
+
+    .busca-container{
+      margin-right: 15px;
+
+      .busca{
+        position: relative;
+
+        input{
+          line-height: 18px;
+          @extend .border-radius;
+          border: solid 1px white;
+          background: transparent;
+          padding: 5px 25px 5px 5px;
+        }
+
+        span{
+          top: 10px;
+          right: 5px;
+          position: absolute;
+        }
+      }
+    }
+
+    .dropdown-menu{
+      padding: 5px;
+      right: -15px;
+      margin: 10px 0px 0px 5px;
+      border-color: $borda-cor;
+
+      &:before{
+          content: "";
+          width: 0;
+          right: 12px;
+          top: -10px;
+          display: block;
+          position: absolute;
+          border-style: solid;
+          border-width: 0px 10px 10px;
+          border-color: $borda-cor transparent;
+      }
+
+      &:after{
+          content: "";
+          width: 0;
+          right: 9px;
+          top: -8px;
+          display: block;
+          position: absolute;
+          border-style: solid;
+          border-width: 0px 13px 13px;
+          border-color: #fff transparent;
+      }
+
+      li{
+        width: 100%;
+        @extend .border-radius;
+
+        a{
+          color: $font-cor;
+        }
+
+        span{
+          top: 3px;
+          color: $corP;
+          font-size: 18px;
+          margin-right: 5px;
+          position: relative;
+        }
+      }
+    }
+  }
 }

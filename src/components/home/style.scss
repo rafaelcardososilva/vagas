@@ -1,3 +1,71 @@
-h1{
-	font-size: 30px;
+$shadow: -1px 2px 1px 0px rgba(200,200,200,1);
+
+div.destaque-container{
+
+	.detalhe{
+		padding: 15px;
+		margin-top: 15px;
+		@extend .borda-padrao;	
+		box-shadow: $shadow;
+
+		.icones{
+		    padding-top: 5px;
+			text-align: right;
+			line-height: 20px;
+
+			span{
+				cursor: pointer;
+				color: #5fbdd5;
+				font-size: 18px;
+				position: relative;
+			}
+			.glyphicon-eye-open{
+				margin-right: 10px;
+
+				.info-pop{
+					width: 110px;
+				}
+			}
+			.glyphicon-time{
+
+				.info-pop{
+					width: 160px;
+				}
+			}
+		}
+
+		.textosegredo{
+			height: 50px;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.textosegredo:before {
+		  content:'';
+		  position: absolute; 
+		  bottom: 0; 
+		  left: 0;
+		  width: 100%; 
+		  text-align: center; 
+		  margin: 0; padding: 30px 0; 
+		  background-image: linear-gradient(to bottom, transparent, white);
+		}
+	}
+}
+
+div.videos-container{
+	padding: 15px;
+    height: 500px;
+	@extend .borda-padrao;
+	box-shadow: $shadow;
+
+	.wrapper{
+		height: 430px;
+	    overflow-y: scroll;
+		margin-bottom: 15px;
+
+		.item{
+			margin-bottom: 15px;
+		}
+	}
 }

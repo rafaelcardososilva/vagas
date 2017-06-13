@@ -1,58 +1,68 @@
 <template>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8">
+			<div class="destaque-container col-md-7">
 				<h1>Vídeo em destaque</h1>
 				<div v-for="video in videoPlay">
-					<div>
-						<iframe width="560" height="315" :src='"https://www.youtube.com/embed/"+video.id' frameborder="0" allowfullscreen></iframe>
+					<div class="embed-responsive embed-responsive-16by9">
+						<iframe :src='"https://www.youtube.com/embed/"+video.id' class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
 					</div>
-					<div>
-						<div>
+					<div class="detalhe">
+						<div class="row">
 							<div class="col-md-10">
-								{{ video.snippet.title }} <br>
-								{{ video.statistics.viewCount }} views <br>
-								{{ video.snippet.publishedAt | formataData }}
+								<h4>{{ video.snippet.title }}</h4>
 							</div>
-							<div class="col-md-2">
+							<div class="icones col-md-2">
+								<span class="glyphicon glyphicon-eye-open" @mouseover="viewCount = !viewCount" @mouseleave="viewCount = !viewCount">
+									<info-pop v-if="viewCount" :info='video.statistics.viewCount + " views"'></info-pop>
+								</span>
+								<span class="glyphicon glyphicon-time" @mouseover="viewTime = !viewTime" @mouseleave="viewTime = !viewTime">
+									<info-pop v-if="viewTime" :info="video.snippet.publishedAt | dataBr"></info-pop>
+								</span>
 							</div>
 						</div>
-						<p>{{ video.snippet.description }} </p>
+						<p :class="{ textosegredo : !viewDesricao }" @click="viewDesricao = !viewDesricao">{{ video.snippet.description }} </p>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<h2>+ Vídeos</h2>
-				<div>
-					<div>
-						<div class="col-md-12" v-for="video in videos">
-							<item-video :video="video" @click.native="assistir(video)"></item-video>
-						</div>
-						<carregar-mais @click.native="proximosVideos()" ref="bt"></carregar-mais>
+				<div class="videos-container">
+					<div class="wrapper">
+						<item-video :video="video" @click.native="assistir(video)" v-for="video in videos"></item-video>
 					</div>
+					<carregar-mais @click.native="proximosVideos()" ref="bt"></carregar-mais>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+
 </template>
 
 <script>
 
 import Botao from '../shared/botao/Botao.vue'
 import Video from '../shared/video/Video.vue';
+import InfoPop from '../shared/info/Info.vue';
 import VideoService from '../../services/VideoService.js'
 
 export default{
 
 	components:{
 		'item-video' : Video, 
-		'carregar-mais' : Botao
+		'carregar-mais' : Botao,
+		"info-pop" : InfoPop
 	},
 	data(){
 		return{
 			videos: [],
 			videoPlay: [],
-			nextPage: ""
+			nextPage: "",
+			viewTime: false,
+			viewCount: false,
+			viewDesricao: false
 		}
 	},
 	methods:{
@@ -92,5 +102,6 @@ export default{
 </script>
 
 <style scoped lang="sass">
+	@import '../../assets/scss/utils.scss';
 	@import './style.scss';
 </style>

@@ -1,12 +1,22 @@
-button{
-	width: 100%;
-	font-size: 12px;
-	border: solid 1px;
-	background: white;
-	border-radius: 4px;
-}
+.bt{
+	text-align: center;	
 
-button:hover{
-	color: white;
-	background: #4e4e4e;
+	button{
+		width: 100%;
+		color: $font-cor;
+		padding: 2px 0px;
+		background: white;
+		@extend .borda-padrao;
+		@extend .border-radius;
+
+		span{
+			@extend .font-small;
+			text-transform: uppercase;
+		}
+	}
+
+	button:hover{
+		color: white;
+		background: #4e4e4e;
+	}
 }

@@ -1,0 +1,45 @@
+.modal-content{
+	padding: 15px;
+
+	.close{
+		color: red;
+	    opacity: 1;
+	}
+
+	.embed-responsive{
+		margin-top: 35px;
+	}
+
+	.detalhe{
+		padding: 15px;
+
+		.icones{
+		    padding-top: 5px;
+			text-align: right;
+			line-height: 20px;
+
+			span{
+				cursor: pointer;
+				color: #5fbdd5;
+				font-size: 18px;
+				position: relative;
+			}
+			.glyphicon-eye-open{
+				margin-right: 10px;
+
+				.info-pop{
+					width: 110px;
+				}
+			}
+			.glyphicon-time{
+
+				.info-pop{
+					width: 160px;
+				}
+			}
+		}
+	}
+}
+
+
+

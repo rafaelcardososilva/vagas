@@ -1,3 +1,57 @@
-h1{
-	font-size: 30px;
+div.item{
+    // width: 400px;
+    // height: 96px;
+	display: table;
+	cursor: pointer;
+
+    &>div{
+    	width: 50%;
+    	text-align: left;
+		display: table-cell;
+		vertical-align: top;
+    }
+
+	.thumb{
+	    margin-right: 10px;
+	    position: relative;
+
+	    img{
+	    	width: 100%;
+	    	opacity: 0.5;
+
+	    	&:hover{
+				opacity: 1;
+	    	}
+	    }
+
+	    .video-duracao{
+	    	right: 2px;
+	    	bottom: 2px;
+	    	color: white;
+    	    opacity: .75;
+    	    font-size: 12px;
+    	    padding: 0px 4px;
+    	    position: absolute;
+    	    background-color: #000;
+	    }
+	}
+
+	.content{
+		position: relative;
+		padding-left: 10px;
+
+		h4{
+	    	display: inline;
+		}
+
+		h4:hover{
+			text-decoration: underline;
+		}
+
+		.view-container{
+			bottom: -4px;
+			color: #c8c8c8;
+			position: absolute;
+		}
+	}
 }

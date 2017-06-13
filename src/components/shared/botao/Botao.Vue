@@ -28,5 +28,6 @@ export default{
 </script>
 
 <style scoped lang="sass">
+	@import '../../../assets/scss/utils.scss';
 	@import './style.scss';
 </style>

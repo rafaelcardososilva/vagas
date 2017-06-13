@@ -1,19 +1,19 @@
 	<template>
 	<div class="container">
-		<h1>Todos os vídeos do Canal</h1>
 		<div v-if="videos.length > 0">
-			<div class="row videos">
-				<div class="col-md-4 col-xs-2" v-for="video in videos">
-					<item-video :video="video"></item-video>
-				</div>
-			</div>
+			<h1>{{ titulo }}</h1>
+			<ul class="videos row"> 
+				<li class="col-lg-4 col-md-6 col-xs-12" data-toggle="modal" data-target="#videoModal" v-for="video in videos"> 
+					<item-video :video="video" @click.native="videoShow = video" ></item-video>
+				</li>
+				<video-modal v-if="videoShow" :video="videoShow"></video-modal>
+			</ul>
 		</div>
 		<div v-else>
-		  <h3>Nenhum resultado encontrado para sua busca :(</h3>
+		  <h2>Nenhum resultado encontrado para sua busca :(</h2>
 		</div>
-		<div class="row">
-			<carregar-mais @click.native="proximosVideos()" ref="bt"></carregar-mais>
-		</div>
+		
+		<carregar-mais @click.native="proximosVideos()" ref="bt"></carregar-mais>
 	</div>
 </template>
 
@@ -21,19 +21,24 @@
 
 import Botao from '../shared/botao/Botao.vue'
 import Video from '../shared/video/Video.vue';
+import VideoModal from '../shared/video-modal/VideoModal.vue';
 import VideoService from '../../services/VideoService.js'
 
 export default{
 
 	components:{
 		"item-video" : Video,
-		'carregar-mais' : Botao
+		"carregar-mais" : Botao,
+		"video-modal" : VideoModal
+
 	},
 	props:["filtro"],
 	data(){
 		return{ 
 			videos: [],
 			nextPage: "",
+			videoShow: null,
+			titulo: "Todos os vídeos do Canal"
 		}
 	},
 	watch:{
@@ -48,7 +53,12 @@ export default{
 					// lista videos com busca
 					scope.videoService
 						.listaComBusca(scope.filtro)
-						.then(videos => scope.videos = videos);
+						.then(videos => {
+							scope.videos = videos;	
+
+							// atualiza o titulo
+							scope.titulo = "Resultados para: \""+scope.filtro+"\"";
+						}); 
 			    }, 500); 
 			}
 		}
